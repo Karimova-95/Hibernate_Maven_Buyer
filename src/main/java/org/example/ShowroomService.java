@@ -102,20 +102,26 @@ public class ShowroomService {
                     } else if (commands[0].equals("removePerson")) {
                         session = factory.getCurrentSession();
                         session.beginTransaction();
-                        int res = session.createQuery("delete from Buyer b where b.name = :name")
-                                        .setParameter("name", commands[1]).executeUpdate();
-                        if (res > 0) {
-                            System.out.println("Buyer " + commands[1] + " was removed");
-                        }
+//                        int res = session.createQuery("delete from Buyer b where b.name = :name")
+//                                        .setParameter("name", commands[1]).executeUpdate();
+//                        if (res > 0) {
+//                            System.out.println("Buyer " + commands[1] + " was removed");
+//                        }
+                        Buyer buyer = (Buyer)session.createQuery("from Buyer where name = : name")
+                                        .setParameter("name", commands[1]).getSingleResult();
+                        session.remove(buyer);
                         session.getTransaction().commit();
                     } else if (commands[0].equals("removeProduct")) {
                         session = factory.getCurrentSession();
                         session.beginTransaction();
-                        int res = session.createQuery("delete from Product b where b.name = :name")
-                                .setParameter("name", commands[1]).executeUpdate();
-                        if (res > 0) {
-                            System.out.println(commands[1] + " was removed");
-                        }
+//                        int res = session.createQuery("delete from Product b where b.name = :name")
+//                                .setParameter("name", commands[1]).executeUpdate();
+//                        if (res > 0) {
+//                            System.out.println(commands[1] + " was removed");
+//                        }
+                        Product product = (Product)session.createQuery("from Product where name = : name")
+                                        .setParameter("name", commands[1]).getSingleResult();
+                        session.delete(product);
                         session.getTransaction().commit();
                     } else if (commands[0].equals("buy")) {
                         session = factory.getCurrentSession();
