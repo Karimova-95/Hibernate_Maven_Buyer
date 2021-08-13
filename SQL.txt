@@ -1,0 +1,46 @@
+create table buyer (
+    id serial primary key,
+    name varchar not null unique
+);
+
+create table product (
+    id serial primary key,
+    name varchar not null unique,
+    price integer not null
+);
+
+create table orders(
+    buyer_id int not null references buyer(id) on delete cascade,
+    product_id int not null references product(id) on delete cascade,
+    price int
+);
+create table order2(
+    id serial primary key,
+    buyer_id int not null references buyer(id) on delete cascade,
+    product_id int not null references product(id) on delete cascade,
+    price int
+);
+
+insert into buyer(name) values
+                               ('buyer1'),
+                               ('buyer2'),
+                               ('buyer3'),
+                               ('buyer4'),
+                               ('buyer5');
+insert into product (name, price)
+values ('apple', 8),
+       ('milk', 50),
+       ('bread', 29),
+       ('juice', 35);
+
+insert into orders(buyer_id, product_id, price) values
+(2, 1, 25),
+(2, 2, 10),
+(3, 3, 17),
+(4, 1, 26);
+
+insert into order2(buyer_id, product_id, price) values
+(2, 1, 25),
+(2, 2, 10),
+(3, 3, 17),
+(4, 1, 26);
